@@ -1,15 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.textocr">
 
+    <!-- Required Permissions -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
-
-    <!-- Android 13+ specific permission -->
-    <uses-permission
-        android:name="android.permission.READ_MEDIA_IMAGES"
-        android:required="false" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"
+        android:required="false" /> <!-- Android 13+ -->
 
     <application
         android:allowBackup="true"
@@ -19,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TextOCR">
 
+        <!-- Splash Screen Activity -->
         <activity
             android:name=".SplashActivity"
             android:exported="true">
@@ -28,12 +27,25 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity" android:exported="true" android:theme="@style/Base.Theme.TextOCR"/>
+        <!-- Main Activity -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Base.Theme.TextOCR" />
 
+        <!-- uCrop for cropping images -->
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
+        <!-- Extra Activities -->
+        <activity android:name=".LiveObjectLabelActivity" />
+        <activity android:name=".LiveObjectLabelTFActivity" />
+        <activity android:name=".ImagePreviewActivity" />
+        <activity android:name=".OMRPreviewActivity" />
 
-
-
+        <!-- FileProvider for image sharing -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -43,10 +55,5 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-        <activity
-            android:name="com.yalantis.ucrop.UCropActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".LiveObjectLabelActivity"/>
     </application>
 </manifest>
