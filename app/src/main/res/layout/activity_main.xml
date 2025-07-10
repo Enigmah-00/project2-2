@@ -16,16 +16,17 @@
         android:layout_height="0dp"
         android:layout_margin="16dp"
         android:adjustViewBounds="true"
+        android:clickable="true"
         android:contentDescription="Selected Image Preview"
-        android:scaleType="centerCrop"
+        android:focusable="true"
         android:src="@drawable/baseline_image_search_24"
-        app:layout_constraintBottom_toTopOf="@+id/scanTextBtn"
+        app:layout_constraintBottom_toTopOf="@+id/textLabelBtnContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- PreviewView for live camera preview (initially hidden) -->
+    <!-- CameraX PreviewView -->
     <androidx.camera.view.PreviewView
         android:id="@+id/previewView"
         android:layout_width="0dp"
@@ -35,13 +36,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Live labels TextView (for live object detection results) -->
+    <!-- Live detection labels -->
     <TextView
         android:id="@+id/liveLabelsTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#88000000"
         android:textColor="#FFFFFF"
+        android:fontFamily="@font/noto_sans_bengali"
         android:textSize="16sp"
         android:padding="12dp"
         android:visibility="gone"
@@ -49,41 +51,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Scan Text Button -->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/scanTextBtn"
+    <!-- Scan Text + Label Image Buttons side by side -->
+    <LinearLayout
+        android:id="@+id/textLabelBtnContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/gradient_green"
-        android:drawablePadding="10dp"
-        android:gravity="center_vertical"
-        android:text="   📄 Scan Text"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cameraImage" />
-
-    <!-- Label Image Button -->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/detectObjectBtn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/gradient_green"
-        android:drawablePadding="10dp"
-        android:gravity="center_vertical"
-        android:text="   🏷️ Label Image"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/cameraImage"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/scanTextBtn" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/scanTextBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="6dp"
+            android:background="@drawable/gradient_green"
+            android:text="   📄 Scan Text"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            android:drawablePadding="8dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/detectObjectBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/gradient_green"
+            android:text="   🏷️ Label Image"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            android:drawablePadding="8dp" />
+    </LinearLayout>
 
     <!-- Real-time Object Labeling Button -->
     <androidx.appcompat.widget.AppCompatButton
@@ -99,9 +107,69 @@
         android:textColor="@android:color/white"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/detectObjectBtn"
+        app:layout_constraintTop_toBottomOf="@id/textLabelBtnContainer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- OMR Check Button -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/omrCheckBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/gradient_green"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"
+        android:text="   📊 OMR Check"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/liveObjectBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- QR + Barcode Buttons side by side -->
+    <LinearLayout
+        android:id="@+id/qrBarcodeBtnContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="30dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/omrCheckBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnScanQRCode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="6dp"
+            android:background="@drawable/gradient_green"
+            android:text="   🔲 QR Scan"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            android:drawablePadding="8dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnScanBarcode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/gradient_green"
+            android:text="   📦 Barcode Scan"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            android:drawablePadding="8dp" />
+    </LinearLayout>
 
     <!-- ProgressBar -->
     <ProgressBar
@@ -115,15 +183,15 @@
         app:layout_constraintBottom_toTopOf="@id/resultTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/liveObjectBtn" />
+        app:layout_constraintTop_toBottomOf="@id/qrBarcodeBtnContainer" />
 
     <!-- Result Title -->
     <TextView
         android:id="@+id/resultTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="8dp"
         android:text="📝 Result:"
         android:textColor="#000000"
         android:textSize="18sp"
@@ -131,12 +199,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/progressBar" />
 
-    <!-- Scrollable Result Text -->
+    <!-- Result Scrollable Text -->
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@id/copyTextBtn"
         app:layout_constraintEnd_toEndOf="parent"
@@ -157,7 +225,7 @@
             android:textSize="16sp" />
     </ScrollView>
 
-    <!-- Copy Button -->
+    <!-- Copy Text Button -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/copyTextBtn"
         android:layout_width="0dp"
@@ -175,5 +243,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Speaker Button -->
+    <ImageButton
+        android:id="@+id/speakTextBtn"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/speaker_pulse"
+        android:contentDescription="Speak Text"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_speaker"
+        android:tint="@android:color/white"
+        tools:layout_editor_absoluteX="340dp"
+        tools:layout_editor_absoluteY="670dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
