@@ -6,3 +6,4 @@
 *.so filter=lfs diff=lfs merge=lfs -text
 *.bin filter=lfs diff=lfs merge=lfs -text
 *.aar filter=lfs diff=lfs merge=lfs -text
+*.EXT filter=lfs diff=lfs merge=lfs -text
