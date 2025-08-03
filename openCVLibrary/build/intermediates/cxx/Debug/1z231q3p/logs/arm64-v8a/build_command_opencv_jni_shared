@@ -1,0 +1,4 @@
+/Users/mahadi/Library/Android/sdk/cmake/3.22.1/bin/ninja \
+  -C \
+  /Users/mahadi/Downloads/TextOCR4/openCVLibrary/.cxx/Debug/1z231q3p/arm64-v8a \
+  opencv_jni_shared

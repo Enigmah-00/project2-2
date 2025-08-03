@@ -1,0 +1,17 @@
+{
+  "installationFolder": "/Users/mahadi/Downloads/TextOCR4/openCVLibrary/build/intermediates/prefab_package/release/prefab",
+  "gradlePath": ":openCVLibrary",
+  "packageInfo": {
+    "packageName": "openCVLibrary",
+    "packageSchemaVersion": 2,
+    "packageDependencies": [],
+    "modules": [
+      {
+        "moduleName": "opencv_jni_shared",
+        "moduleHeaders": "/Users/mahadi/Downloads/TextOCR4/openCVLibrary/native/jni/include",
+        "moduleExportLibraries": [],
+        "abis": []
+      }
+    ]
+  }
+}
